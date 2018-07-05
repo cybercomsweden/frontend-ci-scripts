@@ -150,10 +150,6 @@ module.exports = {
           },
         ],
       },
-      {
-        test: /\.ejs/,
-        loader: require.resolve("@ikea-aoa/ikea-shared-ejs-loader"),
-      },
     ],
   },
   resolve: {

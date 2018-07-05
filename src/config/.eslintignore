@@ -1,0 +1,6 @@
+node_modules
+dist
+lib
+assets
+src/**/*.less
+*.md

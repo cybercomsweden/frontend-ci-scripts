@@ -5,11 +5,11 @@ const scriptPath = resolvePackagePath().replace(/\\/g, '/');
 module.exports = {
   concurrent: false,
   linters: {
-    '**/*.+(js|json|less|css|ts|tsx|md)': [
+    '**/*.+(js|jsx|json|less|css|ts|tsx|md)': [
       `npx ${scriptPath} format`,
       'git add',
     ],
-    '**/*.+(js|ts|tsx)': [
+    '**/*.+(js|jsx|ts|tsx)': [
       `npx ${scriptPath} lint`,
       `npx ${scriptPath} test`,
       'git add',

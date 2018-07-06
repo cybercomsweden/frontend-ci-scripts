@@ -2,7 +2,7 @@ const CLIEngine = require('eslint').CLIEngine;
 
 const cli = new CLIEngine({
   // @remove-on-eject-begin
-  configFile: require.resolve('eslint-config-react-app'),
+  configFile: require.resolve('../config/eslintrc'),
   // @remove-on-eject-end
   fix: process.argv.slice(2).indexOf('--fix') >= 0,
 });

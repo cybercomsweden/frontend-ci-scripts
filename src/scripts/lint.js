@@ -1,26 +1,20 @@
-const path = require("path");
-const spawn = require("cross-spawn");
-const { resolveBin } = require("../utils/utils");
+"use strict";
 
-const here = p => path.join(__dirname, p);
-const hereRelative = p => here(p).replace(process.cwd(), ".");
+const CLIEngine = require("eslint").CLIEngine;
 
-let args = process.argv.slice(2);
+const cli = new CLIEngine({
+  // @remove-on-eject-begin
+  configFile: require.resolve("eslint-config-react-app"),
+  // @remove-on-eject-end
+  fix: process.argv.slice(2).indexOf("--fix") >= 0,
+});
+const report = cli.executeOnFiles(["src/**/*.{js,jsx,mjs}"]);
+const formatter = cli.getFormatter();
 
-const config = ["--config", hereRelative("../config/eslintrc.js")];
+// persist changed files when using --fix option
+CLIEngine.outputFixes(report);
+console.log(formatter(report.results));
 
-const ignore = ["--ignore-path", hereRelative("../config/.eslintignore")];
-
-const cache = args.includes("--no-cache") ? [] : ["--cache"];
-
-const filesToApply = ["."];
-
-const pathToModule = resolveBin("eslint");
-
-const result = spawn.sync(
-  pathToModule,
-  [...config, ...ignore, ...cache, ...args, ...filesToApply],
-  { stdio: "inherit" },
-);
-
-process.exit(result.status);
+if (report.errorCount > 0) {
+  process.exit(1);
+}

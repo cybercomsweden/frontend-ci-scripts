@@ -148,6 +148,10 @@ module.exports = {
               "less-loader",
             ),
           },
+          {
+            test: /\.ejs/,
+            loader: require("../utils/esjLoader"),
+          },
         ],
       },
     ],

@@ -16,7 +16,27 @@ There are a few scripts exposed to help you with your development
 - format / run prettier on your project
 - test / runs jest on test files in src with \*.spec|test.js or in the \_\_test\_\_ folder
 - precommit / runs lint, test and format as a precommit hook
-- start / a webpackdev server for quicker react development
+- start / a webpack-dev-server for quicker react development
+
+## Format
+
+```
+"format": "frontend-ci-scripts format"
+```
+
+format runs prettier in the background and formats all your files.
+You can send args to prettier if you want to format any specific files by adding them to the scripts
+
+```
+"format": "frontend-ci-scripts format src/**/*"
+```
+
+_To be noted_
+On unix systems you need to prevent the glob from being prematurly evaluated do this by putting it in ''
+
+```
+"format": "frontend-ci-scripts format 'src/**/*'"
+```
 
 ## Precommit
 

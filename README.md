@@ -24,7 +24,7 @@ During installation git hooks is setup for you.
 add the following script to your package.json for it to run during each commit
 
 ```
-"precommit": "quality-scripts precommit",
+"precommit": "frontend-ci-scripts precommit",
 ```
 
 ## Editor Integration

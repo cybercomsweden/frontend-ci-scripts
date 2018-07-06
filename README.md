@@ -5,7 +5,7 @@
 While unstable the only way to install is the following
 
 ```
-npm install --save-dev https://github.com/cybercomsweden/frontend-ci-scripts.git
+npm install --save-dev cybercomsweden/frontend-ci-scripts
 ```
 
 ## Usage

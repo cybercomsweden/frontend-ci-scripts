@@ -1,5 +1,6 @@
 const path = require('path');
 const HtmlWebPackPlugin = require('html-webpack-plugin');
+const eslintFormatter = require('react-dev-utils/eslintFormatter');
 
 const getStyleLoaders = require('./webpack/styleLoaders');
 const { resolveApp } = require('../utils/utils');
@@ -63,6 +64,29 @@ module.exports = {
     rules: [
       // Disable require.ensure as it's not a standard language feature.
       { parser: { requireEnsure: false } },
+
+      // First, run the linter.
+      // It's important to do this before Babel processes the JS.
+      {
+        test: /\.(js|jsx|mjs)$/,
+        enforce: 'pre',
+        use: [
+          {
+            options: {
+              formatter: eslintFormatter,
+              eslintPath: require.resolve('eslint'),
+              baseConfig: {
+                extends: [require.resolve('./eslintrc')],
+              },
+              ignore: false,
+              useEslintrc: false,
+            },
+            loader: require.resolve('eslint-loader'),
+          },
+        ],
+        include: resolveApp('src'),
+        exclude: [/[/\\\\]node_modules[/\\\\]/],
+      },
 
       {
         // "oneOf" will traverse all following loaders until one will

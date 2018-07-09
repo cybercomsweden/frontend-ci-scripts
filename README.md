@@ -50,6 +50,7 @@ add the following script to your package.json for it to run during each commit
 ## Editor Integration
 
 ESLint integrations: https://eslint.org/docs/user-guide/integrations
+
 Prettier integrations: https://prettier.io/docs/en/editors.html
 
 You can expose our option files to your editor by adding them to your package.json
@@ -58,4 +59,10 @@ You can expose our option files to your editor by adding them to your package.js
 "eslintConfig": {
     "extends": "./node_modules/frontend-ci-scripts/src/config/eslintrc.js"
   }
+```
+
+For Prettier create a .prettierrc.js and add the following
+
+```
+module.exports = require('frontend-ci-scripts/.prettierrc');
 ```

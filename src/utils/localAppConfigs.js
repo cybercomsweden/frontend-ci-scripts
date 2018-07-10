@@ -7,9 +7,13 @@ const getLocalFile = relativeProjectFilePath =>
     ? require(resolveApp(relativeProjectFilePath))
     : undefined;
 
+const localPackageJson = getLocalFile('package.json');
+const resolvedProxy = localPackageJson.proxy.match(/.js/)
+  ? getLocalFile(localPackageJson.proxy)
+  : require(resolveApp('node_modules') + '/' + localPackageJson.proxy);
+
 module.exports = {
-  getLocalProxies: () => getLocalFile('ServerProxy.js'),
-  getLocalPackageJson: () => getLocalFile('package.json'),
+  getLocalPackageJson: () => localPackageJson,
   getYarnLock: () => getLocalFile('yarn.lock'),
   appHtml: resolveApp('public/index.html'),
   appIndexJs: resolveApp('src/index.js'),
@@ -19,4 +23,5 @@ module.exports = {
   testsSetup: resolveApp('src/setupTests.js'),
   appNodeModules: resolveApp('node_modules'),
   appPath: resolveApp('.'),
+  resolvedProxy: resolvedProxy,
 };

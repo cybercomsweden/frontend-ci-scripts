@@ -5,16 +5,14 @@ const chalk = require('chalk');
 const webpack = require('webpack');
 const webpackDevServer = require('webpack-dev-server');
 const {
-  choosePort,
   createCompiler,
-  prepareProxy,
   prepareUrls,
 } = require('react-dev-utils/WebpackDevServerUtils');
 
 const {
-  getLocalProxies,
   getLocalPackageJson,
   getYarnLock,
+  resolvedProxy,
 } = require('../utils/localAppConfigs');
 const webpackConfig = require('../config/webpack.config.dev.js');
 const createDevServerConfig = require('../config/webpackDevServer.config');
@@ -25,7 +23,7 @@ const isInteractive = process.stdout.isTTY;
 const DEFAULT_PORT = parseInt(process.env.PORT, 10) || 3000;
 const HOST = process.env.HOST || '0.0.0.0';
 const protocol = process.env.HTTPS === 'true' ? 'https' : 'http';
-const proxies = getLocalProxies();
+
 const useYarn = getYarnLock();
 const appName = getLocalPackageJson().name;
 
@@ -33,7 +31,7 @@ const urls = prepareUrls(protocol, HOST, DEFAULT_PORT);
 // Create a webpack compiler that is configured with custom messages.
 const compiler = createCompiler(webpack, webpackConfig, appName, urls, useYarn);
 
-const serverConfig = createDevServerConfig(proxies);
+const serverConfig = createDevServerConfig(resolvedProxy);
 const devServer = new webpackDevServer(compiler, serverConfig);
 
 // Launch WebpackDevServer.

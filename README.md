@@ -1,5 +1,10 @@
 # frontend-ci-scripts
 
+- [Install package](#install)
+- [Add proxy to development](#proxy)
+
+<a name="install"></a>
+
 ## Install
 
 While unstable the only way to install is the following
@@ -66,3 +71,17 @@ For Prettier create a .prettierrc.js and add the following
 ```
 module.exports = require('frontend-ci-scripts/.prettierrc');
 ```
+
+<a name="proxy"></a>
+
+## Proxy
+
+In development you sometimes need to proxy request
+
+Do this by adding a proxy key to you package.json
+
+```
+"proxy": "[dependencieName]" || "path/to/proxy",
+```
+
+It expects a js object or json file.

@@ -23,6 +23,7 @@ const scriptIndex = args.findIndex(
     x === 'format' ||
     x === 'test' ||
     x === 'precommit' ||
+    x === 'build' ||
     x === 'start',
 );
 const script = scriptIndex === -1 ? args[0] : args[scriptIndex];
@@ -33,8 +34,9 @@ switch (script) {
   case 'lint':
   case 'format':
   case 'test':
-  case 'start': {
-    console.log(chalk.cyan('Cybercom quality-scripts v0.6'));
+  case 'start':
+  case 'build': {
+    console.log(chalk.cyan('Cybercom quality-scripts v0.7'));
     const result = spawn.sync(
       'node',
       nodeArgs

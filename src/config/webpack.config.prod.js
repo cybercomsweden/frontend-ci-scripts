@@ -1,14 +1,14 @@
 const path = require('path');
 const webpack = require('webpack');
+const autoprefixer = require('autoprefixer');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 const eslintFormatter = require('react-dev-utils/eslintFormatter');
-
+const getCSSModuleLocalIdent = require('react-dev-utils/getCSSModuleLocalIdent');
 const paths = require('../utils/localAppConfigs');
 
-const getStyleLoaders = require('./webpack/styleLoaders');
 // Source maps are resource heavy and can cause out of memory issue for large source files.
 const shouldUseSourceMap = process.env.GENERATE_SOURCEMAP !== 'false';
 
@@ -25,6 +25,43 @@ const cssRegex = /\.css$/;
 const cssModuleRegex = /\.module\.css$/;
 const lessRegex = /\.less$/;
 const lessModuleRegex = /\.module\.less$/;
+
+const getStyleLoaders = (cssOptions, preProcessor) => {
+  const loaders = [
+    MiniCssExtractPlugin.loader,
+    {
+      loader: require.resolve('css-loader'),
+      options: cssOptions,
+    },
+    {
+      // Options for PostCSS as we reference these options twice
+      // Adds vendor prefixing based on your specified browser support in
+      // package.json
+      loader: require.resolve('postcss-loader'),
+      options: {
+        // Necessary for external CSS imports to work
+        // https://github.com/facebook/create-react-app/issues/2677
+        ident: 'postcss',
+        plugins: () => [
+          require('postcss-flexbugs-fixes'),
+          autoprefixer({
+            flexbox: 'no-2009',
+          }),
+        ],
+        sourceMap: shouldUseSourceMap,
+      },
+    },
+  ];
+  if (preProcessor) {
+    loaders.push({
+      loader: require.resolve(preProcessor),
+      options: {
+        sourceMap: shouldUseSourceMap,
+      },
+    });
+  }
+  return loaders;
+};
 
 // This is the production configuration.
 // It compiles slowly and is focused on producing a fast and minimal bundle.
@@ -111,8 +148,6 @@ module.exports = {
     // We also include JSX as a common component filename extension to support
     // some tools, although we do not recommend using it, see:
     // https://github.com/facebook/create-react-app/issues/290
-    // `web` extension prefixes have been added for better support
-    // for React Native Web.
     extensions: ['.mjs', '.js', '.json', '.jsx'],
   },
   module: {
@@ -194,6 +229,8 @@ module.exports = {
             loader: getStyleLoaders({
               importLoaders: 1,
               sourceMap: shouldUseSourceMap,
+              modules: true,
+              getLocalIdent: getCSSModuleLocalIdent,
             }),
           },
           // Adds support for CSS Modules (https://github.com/css-modules/css-modules)
@@ -221,7 +258,9 @@ module.exports = {
             use: getStyleLoaders(
               {
                 importLoaders: 2,
+                sourceMap: shouldUseSourceMap,
                 modules: true,
+                getLocalIdent: getCSSModuleLocalIdent,
               },
               'less-loader',
             ),

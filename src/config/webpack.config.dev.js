@@ -1,5 +1,6 @@
 const path = require('path');
 const autoprefixer = require('autoprefixer');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 const HtmlWebPackPlugin = require('html-webpack-plugin');
 const eslintFormatter = require('react-dev-utils/eslintFormatter');
 
@@ -215,6 +216,7 @@ module.exports = {
     ],
   },
   plugins: [
+    new CopyWebpackPlugin([paths.appPublic, paths.appMocks]),
     new HtmlWebPackPlugin({
       template: paths.appHtml,
       inject: true,

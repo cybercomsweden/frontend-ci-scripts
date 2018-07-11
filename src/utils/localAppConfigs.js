@@ -18,6 +18,7 @@ module.exports = {
   appHtml: resolveApp('public/index.html'),
   appIndexJs: resolveApp('src/index.js'),
   appPublic: resolveApp('public'),
+  appMocks: resolveApp('__mocks__'),
   appBuild: resolveApp('build'),
   appSrc: resolveApp('src'),
   testsSetup: resolveApp('src/setupTests.js'),

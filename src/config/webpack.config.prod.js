@@ -6,7 +6,7 @@ const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 const eslintFormatter = require('react-dev-utils/eslintFormatter');
-const getCSSModuleLocalIdent = require('react-dev-utils/getCSSModuleLocalIdent');
+const getCSSModuleLocalIdent = require('../utils/getCSSModuleLocalIdent');
 const paths = require('../utils/localAppConfigs');
 
 // Source maps are resource heavy and can cause out of memory issue for large source files.

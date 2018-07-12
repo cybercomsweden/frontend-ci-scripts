@@ -57,7 +57,7 @@ module.exports = {
   devtool: 'cheap-module-source-map',
   entry: [
     require.resolve('react-dev-utils/webpackHotDevClient'),
-    resolveApp('src/index.js'),
+    paths.appIndexJs
   ],
   output: {
     // Add /* filename */ comments to generated require()s in the output.

@@ -85,3 +85,13 @@ Do this by adding a proxy key to you package.json
 ```
 
 It expects a js object or json file.
+
+## Mocks
+
+If webpack needs to serve mock pages, add a `mocks` key to package.json.
+
+```
+"mocks": "path/to/mocks",
+```
+
+It expects a path to a directory (should be relative to the project root).

@@ -60,11 +60,17 @@ Prettier integrations: https://prettier.io/docs/en/editors.html
 
 You can expose our option files to your editor by adding them to your package.json
 
+---
+
 ```
 "eslintConfig": {
-    "extends": "./node_modules/frontend-ci-scripts/src/config/eslintrc.js"
+    "extends": "./node_modules/frontend-ci-scripts/.eslintrc.js"
   }
 ```
+
+or add your own .eslintrc file and extend the path above
+
+---
 
 For Prettier create a .prettierrc.js and add the following
 

@@ -20,7 +20,7 @@ module.exports = {
   getLocalPackageJson: () => localPackageJson,
   getYarnLock: () => getLocalFile('yarn.lock'),
   appHtml: resolveApp('public/index.html'),
-  appIndexJs: resolveApp('src/index'),
+  appIndexJs: resolveApp('src'),
   appPublic: resolveApp('public'),
   appBuild: resolveApp('build'),
   appSrc: resolveApp('src'),

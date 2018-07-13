@@ -16,6 +16,7 @@ process.on('unhandledRejection', err => {
 const chalk = require('chalk');
 const spawn = require('cross-spawn');
 const args = process.argv.slice(2);
+const paths = require('./utils/localAppConfigs');
 
 const scriptIndex = args.findIndex(
   x =>
@@ -36,7 +37,10 @@ switch (script) {
   case 'test':
   case 'start':
   case 'build': {
-    console.log(chalk.cyan('Cybercom quality-scripts v0.7'));
+    const packageJson = paths.getLocalPackageJson();
+    console.log(
+      chalk.cyan(`Cybercom ${packageJson.name} ${packageJson.version}`),
+    );
     const result = spawn.sync(
       'node',
       nodeArgs

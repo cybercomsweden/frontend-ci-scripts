@@ -8,9 +8,13 @@ const getLocalFile = relativeProjectFilePath =>
     : undefined;
 
 const localPackageJson = getLocalFile('package.json');
-const resolvedProxy = localPackageJson.proxy.match(/.js/)
-  ? getLocalFile(localPackageJson.proxy)
-  : require(resolveApp('node_modules') + '/' + localPackageJson.proxy);
+
+const resolvedProxy =
+  localPackageJson.proxy === undefined
+    ? undefined
+    : localPackageJson.proxy.match(/.js/)
+      ? getLocalFile(localPackageJson.proxy)
+      : require(resolveApp('node_modules') + '/' + localPackageJson.proxy);
 
 module.exports = {
   getLocalPackageJson: () => localPackageJson,

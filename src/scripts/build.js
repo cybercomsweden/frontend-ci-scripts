@@ -9,7 +9,6 @@ process.on('unhandledRejection', err => {
   throw err;
 });
 
-const path = require('path');
 const chalk = require('chalk');
 const fs = require('fs-extra');
 const webpack = require('webpack');
@@ -106,7 +105,7 @@ checkBrowsers(paths.appPath)
 function build(previousFileSizes) {
   console.log('Creating an optimized production build...');
 
-  let compiler = webpack(config);
+  const compiler = webpack(config);
   return new Promise((resolve, reject) => {
     compiler.run((err, stats) => {
       if (err) {

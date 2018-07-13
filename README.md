@@ -101,3 +101,9 @@ If webpack needs to serve mock pages, add a `mocks` key to package.json.
 ```
 
 It expects a path to a directory (should be relative to the project root).
+
+## Production Build
+
+### Public Path
+
+If an environment variable `PUBLIC_PATH` is set, the webpack build will use that. Otherwise it defaults to '/'.

@@ -12,7 +12,7 @@ const paths = require('../utils/localAppConfigs');
 // Source maps are resource heavy and can cause out of memory issue for large source files.
 const shouldUseSourceMap = process.env.GENERATE_SOURCEMAP !== 'false';
 
-const publicPath = '/';
+const publicPath = process.env.PUBLIC_PATH || '/';
 
 // Assert this just to be safe.
 // Development builds of React are slow and not intended for production.

@@ -17,7 +17,6 @@
   "license": "MIT",
   "dependencies": {
     "autoprefixer": "^8.6.2",
-    "babel-cli": "^6.26.0",
     "babel-core": "^6.26.3",
     "babel-eslint": "^7.2.3",
     "babel-jest": "^23.2.0",
@@ -33,7 +32,6 @@
     "chalk": "^2.4.1",
     "cross-env": "^5.1.6",
     "css-loader": "^0.28.11",
-    "ejs": "^2.6.1",
     "eslint": "^4.19.1",
     "eslint-config-react-app": "^2.1.0",
     "eslint-loader": "^2.0.0",
@@ -48,7 +46,6 @@
     "identity-obj-proxy": "^3.0.0",
     "jest": "^23.1.0",
     "jest-junit": "^5.1.0",
-    "less": "^3.0.4",
     "less-loader": "^4.1.0",
     "lint-staged": "^7.1.2",
     "loader-utils": "^1.1.0",

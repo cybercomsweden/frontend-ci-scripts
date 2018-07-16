@@ -1,8 +1,8 @@
 const path = require('path');
-const autoprefixer = require('autoprefixer');
 const HtmlWebPackPlugin = require('html-webpack-plugin');
 const eslintFormatter = require('react-dev-utils/eslintFormatter');
 
+const styleLoaders = require('./webpackUtils/styleLoaders');
 const { resolveApp } = require('../utils/utils');
 const paths = require('../utils/localAppConfigs');
 
@@ -13,34 +13,7 @@ const lessRegex = /\.less$/;
 const lessModuleRegex = /\.module\.less$/;
 
 const getStyleLoaders = (cssOptions, preProcessor) => {
-  const loaders = [
-    require.resolve('style-loader'),
-    {
-      loader: require.resolve('css-loader'),
-      options: cssOptions,
-    },
-    {
-      // Options for PostCSS as we reference these options twice
-      // Adds vendor prefixing based on your specified browser support in
-      // package.json
-      loader: require.resolve('postcss-loader'),
-      options: {
-        // Necessary for external CSS imports to work
-        // https://github.com/facebook/create-react-app/issues/2677
-        ident: 'postcss',
-        plugins: () => [
-          require('postcss-flexbugs-fixes'),
-          autoprefixer({
-            flexbox: 'no-2009',
-          }),
-        ],
-      },
-    },
-  ];
-  if (preProcessor) {
-    loaders.push(require.resolve(preProcessor));
-  }
-  return loaders;
+  return styleLoaders(cssOptions, preProcessor, process.env.NODE_ENV);
 };
 
 // Webpack uses `publicPath` to determine where the app is being served from.
@@ -57,7 +30,7 @@ module.exports = {
   devtool: 'cheap-module-source-map',
   entry: [
     require.resolve('react-dev-utils/webpackHotDevClient'),
-    paths.appIndexJs
+    paths.appIndexJs,
   ],
   output: {
     // Add /* filename */ comments to generated require()s in the output.

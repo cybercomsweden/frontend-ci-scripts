@@ -1,34 +1,18 @@
 const path = require('path');
 const webpack = require('webpack');
-const autoprefixer = require('autoprefixer');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
-const InterpolateHtmlPlugin = require('react-dev-utils/InterpolateHtmlPlugin');
 const eslintFormatter = require('react-dev-utils/eslintFormatter');
 const getCSSModuleLocalIdent = require('../utils/getCSSModuleLocalIdent');
 const paths = require('../utils/localAppConfigs');
+const styleLoaders = require('./webpackUtils/styleLoaders');
 
 // Source maps are resource heavy and can cause out of memory issue for large source files.
 const shouldUseSourceMap = process.env.GENERATE_SOURCEMAP !== 'false';
 
 const publicPath = process.env.PUBLIC_PATH || '/';
-
-let env = {};
-env.raw = Object.keys(process.env).reduce(
-  (env, key) => {
-    env[key] = process.env[key];
-    return env;
-  },
-  {
-    // Useful for resolving the correct path to static assets in `public`.
-    // For example, <img src={process.env.PUBLIC_URL + '/img/logo.png'} />.
-    // This should only be used as an escape hatch. Normally you would put
-    // images into the `src` and `import` them in code to get their paths.
-    PUBLIC_URL: publicPath,
-  },
-);
 
 // Assert this just to be safe.
 // Development builds of React are slow and not intended for production.
@@ -43,40 +27,7 @@ const lessRegex = /\.less$/;
 const lessModuleRegex = /\.module\.less$/;
 
 const getStyleLoaders = (cssOptions, preProcessor) => {
-  const loaders = [
-    MiniCssExtractPlugin.loader,
-    {
-      loader: require.resolve('css-loader'),
-      options: cssOptions,
-    },
-    {
-      // Options for PostCSS as we reference these options twice
-      // Adds vendor prefixing based on your specified browser support in
-      // package.json
-      loader: require.resolve('postcss-loader'),
-      options: {
-        // Necessary for external CSS imports to work
-        // https://github.com/facebook/create-react-app/issues/2677
-        ident: 'postcss',
-        plugins: () => [
-          require('postcss-flexbugs-fixes'),
-          autoprefixer({
-            flexbox: 'no-2009',
-          }),
-        ],
-        sourceMap: shouldUseSourceMap,
-      },
-    },
-  ];
-  if (preProcessor) {
-    loaders.push({
-      loader: require.resolve(preProcessor),
-      options: {
-        sourceMap: shouldUseSourceMap,
-      },
-    });
-  }
-  return loaders;
+  return styleLoaders(cssOptions, preProcessor, process.env.NODE_ENV);
 };
 
 // This is the production configuration.
@@ -265,7 +216,13 @@ module.exports = {
           {
             test: lessRegex,
             exclude: lessModuleRegex,
-            use: getStyleLoaders({ importLoaders: 2 }, 'less-loader'),
+            use: getStyleLoaders(
+              {
+                importLoaders: 2,
+                sourceMap: shouldUseSourceMap,
+              },
+              'less-loader',
+            ),
           },
           // Adds support for CSS Modules, but using less
           // using the extension .module.less
@@ -320,12 +277,8 @@ module.exports = {
         minifyURLs: true,
       },
     }),
-    // Makes some environment variables available in index.html.
-    // The public URL is available as %PUBLIC_URL% in index.html, e.g.:
-    // <link rel="shortcut icon" href="%PUBLIC_URL%/favicon.ico">
-    new InterpolateHtmlPlugin(env.raw),
     // Makes some environment variables available to the JS code, for example:
-    // if (process.env.NODE_ENV === 'production') { ... }. See `./env.js`.
+    // if (process.env.NODE_ENV === 'production') { ... }.
     // It is absolutely essential that NODE_ENV was set to production here.
     // Otherwise React will be compiled in the very slow development mode.
     new webpack.DefinePlugin(process.env.NODE_ENV),

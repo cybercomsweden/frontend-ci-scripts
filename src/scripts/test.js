@@ -25,13 +25,12 @@ if (!watch) {
   process.env.JEST_JUNIT_OUTPUT = './test-reports/junit.xml';
   argv.push('--bail');
   argv.push('--passWithNoTests');
-  argv.push('--testResultsProcessor=jest-junit');
 } else {
   argv.push('--watch');
 }
 
 const createJestConfig = require('../config/createJestConfig');
-const config = JSON.stringify(createJestConfig(process.cwd()));
+const config = JSON.stringify(createJestConfig(process.cwd(), !watch));
 
 argv.push('--config', config);
 

@@ -67,6 +67,15 @@ module.exports = {
     // some tools, although we do not recommend using it, see:
     // https://github.com/facebook/create-react-app/issues/290
     extensions: ['.mjs', '.js', '.json', '.jsx'],
+    alias: {
+      // Resolve Babel runtime relative to react-scripts.
+      // It usually still works on npm 3 without this but it would be
+      // unfortunate to rely on, as react-scripts could be symlinked,
+      // and thus @babel/runtime might not be resolvable from the source.
+      '@babel/runtime': path.dirname(
+        require.resolve('@babel/runtime/package.json'),
+      ),
+    },
   },
   module: {
     strictExportPresence: true,

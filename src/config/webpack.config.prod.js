@@ -185,6 +185,31 @@ module.exports = {
               },
             ],
           },
+          // Process any JS outside of the app with Babel.
+          // Unlike the application JS, we only compile the standard ES features.
+          {
+            test: /\.js$/,
+            use: [
+              // This loader parallelizes code compilation, it is optional but
+              // improves compile time on larger projects
+              {
+                loader: require.resolve('thread-loader'),
+                options: {
+                  poolTimeout: Infinity, // keep workers alive for more effective watch mode
+                },
+              },
+              {
+                loader: require.resolve('babel-loader'),
+                options: {
+                  babelrc: false,
+                  compact: false,
+                  presets: [require.resolve('babel-preset-react-app')],
+                  cacheDirectory: true,
+                  highlightCode: true,
+                },
+              },
+            ],
+          },
           // "postcss" loader applies autoprefixer to our CSS.
           // "css" loader resolves paths in CSS and adds assets as dependencies.
           // `MiniCSSExtractPlugin` extracts styles into CSS

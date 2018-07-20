@@ -2,6 +2,7 @@ const path = require('path');
 const HtmlWebPackPlugin = require('html-webpack-plugin');
 const eslintFormatter = require('react-dev-utils/eslintFormatter');
 
+const getCSSModuleLocalIdent = require('../utils/getCSSModuleLocalIdent');
 const styleLoaders = require('./webpackUtils/styleLoaders');
 const { resolveApp } = require('../utils/utils');
 const paths = require('../utils/localAppConfigs');
@@ -195,6 +196,7 @@ module.exports = {
             use: getStyleLoaders({
               importLoaders: 1,
               modules: true,
+              getLocalIdent: getCSSModuleLocalIdent,
             }),
           },
           // Opt-in support for Less (using .less extensions).
@@ -213,6 +215,7 @@ module.exports = {
               {
                 importLoaders: 2,
                 modules: true,
+                getLocalIdent: getCSSModuleLocalIdent,
               },
               'less-loader',
             ),

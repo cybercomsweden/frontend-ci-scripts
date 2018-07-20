@@ -230,6 +230,7 @@ module.exports = {
             loader: getStyleLoaders({
               importLoaders: 1,
               sourceMap: shouldUseSourceMap,
+              getLocalIdent: getCSSModuleLocalIdent,
             }),
           },
           // Adds support for CSS Modules (https://github.com/css-modules/css-modules)

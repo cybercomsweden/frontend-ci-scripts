@@ -1,11 +1,13 @@
 const path = require('path');
-const HtmlWebPackPlugin = require('html-webpack-plugin');
 const eslintFormatter = require('react-dev-utils/eslintFormatter');
 
 const getCSSModuleLocalIdent = require('../utils/getCSSModuleLocalIdent');
 const styleLoaders = require('./webpackUtils/styleLoaders');
 const { resolveApp } = require('../utils/utils');
 const paths = require('../utils/localAppConfigs');
+
+const pluginLoader = require('./webpackUtils/pluginLoader');
+const optimizationLoader = require('./webpackUtils/optimizationLoader');
 
 // style files regexes
 const cssRegex = /\.css$/;
@@ -25,9 +27,11 @@ const publicPath = '/';
 // Omit trailing slash as %PUBLIC_PATH%/xyz looks better than %PUBLIC_PATH%xyz.
 
 // const publicUrl = '';
+const mode =
+  process.env.NODE_ENV === 'development' ? 'development' : 'production';
 
 module.exports = {
-  mode: 'development',
+  mode: mode,
   devtool: 'cheap-module-source-map',
   entry: [
     require.resolve('react-dev-utils/webpackHotDevClient'),
@@ -49,19 +53,7 @@ module.exports = {
       path.resolve(info.absoluteResourcePath).replace(/\\/g, '/'),
   },
 
-  optimization: {
-    // Automatically split vendor and commons
-    // https://twitter.com/wSokra/status/969633336732905474
-    // https://medium.com/webpack/webpack-4-code-splitting-chunk-graph-and-the-splitchunks-optimization-be739a861366
-
-    splitChunks: {
-      chunks: 'all',
-      name: 'vendors',
-    },
-    // Keep the runtime chunk seperated to enable long term caching
-    // https://twitter.com/wSokra/status/969679223278505985
-    runtimeChunk: true,
-  },
+  optimization: optimizationLoader(process.env.NODE_ENV),
   resolve: {
     // These are the reasonable defaults supported by the Node ecosystem.
     // We also include JSX as a common component filename extension to support
@@ -240,10 +232,5 @@ module.exports = {
       },
     ],
   },
-  plugins: [
-    new HtmlWebPackPlugin({
-      template: paths.appHtml,
-      inject: true,
-    }),
-  ],
+  plugins: pluginLoader(process.env.NODE_ENV),
 };

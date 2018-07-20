@@ -1,5 +1,5 @@
 process.env.BABEL_ENV = 'development';
-process.env.NODE_ENV = 'development';
+process.env.NODE_ENV = process.env.NODE_ENV || 'development';
 
 const chalk = require('chalk');
 const webpack = require('webpack');
@@ -16,7 +16,6 @@ const {
 } = require('../utils/localAppConfigs');
 const webpackConfig = require('../config/webpack.config.dev.js');
 const createDevServerConfig = require('../config/webpackDevServer.config');
-
 const clearConsole = require('./../utils/clearConsole');
 
 const isInteractive = process.stdout.isTTY;

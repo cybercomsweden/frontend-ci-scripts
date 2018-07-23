@@ -55,7 +55,9 @@ module.exports = (env = 'development', shouldUseSourceMap = false) =>
             cache: true,
             sourceMap: shouldUseSourceMap,
           }),
-          new OptimizeCSSAssetsPlugin(),
+          new OptimizeCSSAssetsPlugin({
+            cssProcessorOptions: { safe: true },
+          }),
         ],
         // Automatically split vendor and commons
         // https://twitter.com/wSokra/status/969633336732905474

@@ -39,7 +39,7 @@ module.exports = (rootdir, ci) => {
       '/node_modules/.+\\.(js|jsx|mjs)$',
       '^.+\\.module\\.(css|sass|scss)$',
     ],
-    reporters: ci ? ['jest-junit'] : [],
+    reporters: ci ? ['default', 'jest-junit'] : ['default'],
     // moduleNameMapper: {
     //   "^react-native$": "react-native-web",
     //   "^.+\\.module\\.(css|sass|scss)$": "identity-obj-proxy",

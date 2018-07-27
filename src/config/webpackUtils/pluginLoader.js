@@ -11,6 +11,9 @@ module.exports = env =>
           template: paths.appHtml,
           inject: true,
         }),
+        // Makes some environment variables available to the JS code, for example:
+        // if (process.env.NODE_ENV === 'production') { ... }.
+        new webpack.DefinePlugin(env),
       ]
     : [
         // Generates an `index.html` file with the <script> injected.

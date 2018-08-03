@@ -33,17 +33,13 @@ module.exports = (rootdir, ci) => {
       '^(?!.*\\.(js|jsx|mjs|css|json|graphql)$)': here('jest/fileTransform.js'),
     },
     moduleNameMapper: {
-      '\\.(css|less)$': '<rootDir>/__mocks__/styleMock.js',
+      '^.+\\.module\\.(css|sass|scss|less)$': 'identity-obj-proxy',
     },
     transformIgnorePatterns: [
       '/node_modules/.+\\.(js|jsx|mjs)$',
       '^.+\\.module\\.(css|sass|scss)$',
     ],
     reporters: ci ? ['default', 'jest-junit'] : ['default'],
-    // moduleNameMapper: {
-    //   "^react-native$": "react-native-web",
-    //   "^.+\\.module\\.(css|sass|scss)$": "identity-obj-proxy",
-    // },
     //   moduleFileExtensions: [
     //     "web.js",
     //     "js",

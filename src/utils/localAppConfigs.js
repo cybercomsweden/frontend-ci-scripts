@@ -2,8 +2,11 @@ const fs = require('fs');
 
 const { resolveApp } = require('./utils');
 
+const existsLocalFile = relativeProjectFilePath =>
+  fs.existsSync(resolveApp(relativeProjectFilePath));
+
 const getLocalFile = relativeProjectFilePath =>
-  fs.existsSync(resolveApp(relativeProjectFilePath))
+  existsLocalFile(relativeProjectFilePath)
     ? require(resolveApp(relativeProjectFilePath))
     : undefined;
 
@@ -18,7 +21,6 @@ const resolvedProxy =
 
 module.exports = {
   getLocalPackageJson: () => localPackageJson,
-  getYarnLock: () => getLocalFile('yarn.lock'),
   appHtml: resolveApp('public/index.html'),
   appIndexJs: resolveApp('src'),
   appPublic: resolveApp('public'),
@@ -28,4 +30,5 @@ module.exports = {
   appNodeModules: resolveApp('node_modules'),
   appPath: resolveApp('.'),
   resolvedProxy: resolvedProxy,
+  useYarn: existsLocalFile('yarn.lock'),
 };

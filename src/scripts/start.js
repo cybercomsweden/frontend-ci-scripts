@@ -11,7 +11,7 @@ const {
 
 const {
   getLocalPackageJson,
-  getYarnLock,
+  useYarn,
   resolvedProxy,
 } = require('../utils/localAppConfigs');
 const webpackConfig = require('../config/webpack.config.dev.js');
@@ -23,7 +23,6 @@ const DEFAULT_PORT = parseInt(process.env.PORT, 10) || 3000;
 const HOST = process.env.HOST || '0.0.0.0';
 const protocol = process.env.HTTPS === 'true' ? 'https' : 'http';
 
-const useYarn = getYarnLock();
 const appName = getLocalPackageJson().name;
 
 const urls = prepareUrls(protocol, HOST, DEFAULT_PORT);

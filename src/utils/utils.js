@@ -1,7 +1,7 @@
-const path = require("path");
-const fs = require("fs");
-const readPkgUp = require("read-pkg-up");
-const which = require("which");
+const path = require('path');
+const fs = require('fs');
+const readPkgUp = require('read-pkg-up');
+const which = require('which');
 
 const { pkg, path: pkgPath } = readPkgUp.sync({
   cwd: fs.realpathSync(process.cwd()),
@@ -11,16 +11,16 @@ const appDirectory = path.dirname(pkgPath);
 const resolveApp = relativePath => path.resolve(appDirectory, relativePath);
 
 function resolvePackagePath() {
-  if (pkg.name === "frontend-ci-scripts") {
-    return require.resolve("../").replace(process.cwd(), ".");
+  if (pkg.name === 'frontend-ci-scripts') {
+    return require.resolve('../').replace(process.cwd(), '.');
   }
-  return resolveBin("frontend-ci-scripts");
+  return resolveBin('frontend-ci-scripts');
 }
 
 // eslint-disable-next-line complexity
 function resolveBin(
   modName,
-  { executable = modName, cwd = process.cwd() } = {},
+  { executable = modName, cwd = process.cwd() } = {}
 ) {
   let pathFromWhich;
   try {
@@ -32,12 +32,13 @@ function resolveBin(
     const modPkgPath = require.resolve(`${modName}/package.json`);
     const modPkgDir = path.dirname(modPkgPath);
     const { bin } = require(modPkgPath);
-    const binPath = typeof bin === "string" ? bin : bin[executable];
+    const binPath = typeof bin === 'string' ? bin : bin[executable];
     const fullPathToBin = path.join(modPkgDir, binPath);
+
     if (fullPathToBin === pathFromWhich) {
       return executable;
     }
-    return fullPathToBin.replace(cwd, ".");
+    return fullPathToBin.replace(cwd, '.');
   } catch (error) {
     if (pathFromWhich) {
       return executable;
@@ -61,7 +62,7 @@ function envIsSet(name) {
   return (
     process.env.hasOwnProperty(name) &&
     process.env[name] &&
-    process.env[name] !== "undefined"
+    process.env[name] !== 'undefined'
   );
 }
 

@@ -24,7 +24,6 @@ const watch =
 if (!watch) {
   process.env.JEST_JUNIT_OUTPUT = './test-reports/junit.xml';
   argv.push('--bail');
-  argv.push('--passWithNoTests');
 } else {
   argv.push('--watch');
 }

@@ -10,6 +10,8 @@ const cssRegex = /\.css$/;
 const cssModuleRegex = /\.module\.css$/;
 const lessRegex = /\.less$/;
 const lessModuleRegex = /\.module\.less$/;
+const sassRegex = /\.(scss|sass)$/;
+const sassModuleRegex = /\.module\.(scss|sass)$/;
 
 const getStyleLoaders = (cssOptions, preProcessor) => {
   return styleLoaders(cssOptions, preProcessor, process.env.NODE_ENV);
@@ -145,7 +147,7 @@ module.exports = (env = 'development', shouldUseSourceMap = false) => ({
               importLoaders: 2,
               sourceMap: shouldUseSourceMap,
             },
-            'less-loader',
+            'less-loader'
           ),
         },
         // Adds support for CSS Modules, but using less
@@ -159,7 +161,30 @@ module.exports = (env = 'development', shouldUseSourceMap = false) => ({
               modules: true,
               getLocalIdent: getCSSModuleLocalIdent,
             },
-            'less-loader',
+            'less-loader'
+          ),
+        },
+        // Opt-in support for SASS (using .scss or .sass extensions).
+        // Chains the sass-loader with the css-loader and the style-loader
+        // to immediately apply all styles to the DOM.
+        // By default we support SASS Modules with the
+        // extensions .module.scss or .module.sass
+        {
+          test: sassRegex,
+          exclude: sassModuleRegex,
+          use: getStyleLoaders({ importLoaders: 2 }, 'sass-loader'),
+        },
+        // Adds support for CSS Modules, but using SASS
+        // using the extension .module.scss or .module.sass
+        {
+          test: sassModuleRegex,
+          use: getStyleLoaders(
+            {
+              importLoaders: 2,
+              modules: true,
+              getLocalIdent: getCSSModuleLocalIdent,
+            },
+            'sass-loader'
           ),
         },
         // "file" loader makes sure those assets get served by WebpackDevServer.

@@ -21,7 +21,7 @@ module.exports = (rootdir, ci) => {
     collectCoverageFrom: ['src/**/*.{js,jsx,mjs}'],
     testMatch: [
       '**/__tests__/**/*.{js,jsx,mjs}',
-      '**/?(*.)(spec|test).{js,jsx,mjs}',
+      '**/(*.)(spec|test).{js,jsx,mjs}',
     ],
     //   where to search for files/tests
     roots: jestRootsArray,

@@ -7,7 +7,7 @@ const hereRelative = p => here(p).replace(process.cwd(), '.');
 const useBuiltinConfig = !hasFile('.eslintrc') && !hasFile('.eslintrc.js');
 
 const config = useBuiltinConfig
-  ? { configFile: require.resolve(hereRelative('../config/eslintrc.js')) }
+  ? { configFile: require.resolve('../config/eslintrc.js') }
   : { useEslintrc: true };
 
 const cli = new CLIEngine({

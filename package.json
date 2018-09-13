@@ -1,6 +1,6 @@
 {
   "name": "frontend-ci-scripts",
-  "version": "0.9.0",
+  "version": "0.10.0",
   "description": "",
   "engines": {
     "node": ">= 8.10",

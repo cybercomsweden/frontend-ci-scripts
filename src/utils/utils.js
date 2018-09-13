@@ -66,9 +66,13 @@ function envIsSet(name) {
   );
 }
 
+const fromRoot = (...p) => path.join(appDirectory, ...p);
+const hasFile = (...p) => fs.existsSync(fromRoot(...p));
+
 module.exports = {
   resolveApp,
   resolvePackagePath,
   resolveBin,
   parseEnv,
+  hasFile,
 };

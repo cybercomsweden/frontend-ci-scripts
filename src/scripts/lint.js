@@ -1,9 +1,17 @@
+const path = require('path');
 const CLIEngine = require('eslint').CLIEngine;
+const { hasFile } = require('../utils/utils');
+
+const here = p => path.join(__dirname, p);
+const hereRelative = p => here(p).replace(process.cwd(), '.');
+const useBuiltinConfig = !hasFile('.eslintrc') && !hasFile('.eslintrc.js');
+
+const config = useBuiltinConfig
+  ? { configFile: require.resolve(hereRelative('../config/eslintrc.js')) }
+  : { useEslintrc: true };
 
 const cli = new CLIEngine({
-  // @remove-on-eject-begin
-  configFile: require.resolve('../config/eslintrc'),
-  // @remove-on-eject-end
+  ...config,
   fix: process.argv.slice(2).indexOf('--fix') >= 0,
 });
 const report = cli.executeOnFiles(['src/**/*.{js,jsx,mjs}']);

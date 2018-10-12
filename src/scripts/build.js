@@ -65,12 +65,12 @@ checkBrowsers(paths.appPath)
         console.log(
           '\nSearch for the ' +
             chalk.underline(chalk.yellow('keywords')) +
-            ' to learn more about each warning.'
+            ' to learn more about each warning.',
         );
         console.log(
           'To ignore, add ' +
             chalk.cyan('// eslint-disable-next-line') +
-            ' to the line before.\n'
+            ' to the line before.\n',
         );
       } else {
         console.log(chalk.green('Compiled successfully.\n'));
@@ -82,7 +82,7 @@ checkBrowsers(paths.appPath)
         previousFileSizes,
         paths.appBuild,
         WARN_AFTER_BUNDLE_GZIP_SIZE,
-        WARN_AFTER_CHUNK_GZIP_SIZE
+        WARN_AFTER_CHUNK_GZIP_SIZE,
       );
       console.log();
 
@@ -94,7 +94,7 @@ checkBrowsers(paths.appPath)
       console.log(chalk.red('Failed to compile.\n'));
       printBuildError(err);
       process.exit(1);
-    }
+    },
   )
   .catch(err => {
     if (err && err.message) {
@@ -107,23 +107,13 @@ checkBrowsers(paths.appPath)
 function build(previousFileSizes) {
   console.log('Creating an optimized production build...');
 
-  let compiler = webpack(config);
+  const compiler = webpack(config);
   return new Promise((resolve, reject) => {
     compiler.run((err, stats) => {
-      let messages;
       if (err) {
-        if (!err.message) {
-          return reject(err);
-        }
-        messages = formatWebpackMessages({
-          errors: [err.message],
-          warnings: [],
-        });
-      } else {
-        messages = formatWebpackMessages(
-          stats.toJson({ all: false, warnings: true, errors: true })
-        );
+        return reject(err);
       }
+      const messages = formatWebpackMessages(stats.toJson({}, true));
       if (messages.errors.length) {
         // Only keep the first error. Others are often indicative
         // of the same problem, but confuse the reader with noise.
@@ -141,8 +131,8 @@ function build(previousFileSizes) {
         console.log(
           chalk.yellow(
             '\nTreating warnings as errors because process.env.CI = true.\n' +
-              'Most CI servers set it automatically.\n'
-          )
+              'Most CI servers set it automatically.\n',
+          ),
         );
         return reject(new Error(messages.warnings.join('\n\n')));
       }

@@ -10,7 +10,7 @@ module.exports = (env = 'development', shouldUseSourceMap = false) =>
 
         splitChunks: {
           chunks: 'all',
-          name: false,
+          name: 'vendors',
         },
         // Keep the runtime chunk seperated to enable long term caching
         // https://twitter.com/wSokra/status/969679223278505985
@@ -64,7 +64,7 @@ module.exports = (env = 'development', shouldUseSourceMap = false) =>
         // https://medium.com/webpack/webpack-4-code-splitting-chunk-graph-and-the-splitchunks-optimization-be739a861366
         splitChunks: {
           chunks: 'all',
-          name: false,
+          name: 'vendors',
         },
         // Keep the runtime chunk seperated to enable long term caching
         // https://twitter.com/wSokra/status/969679223278505985

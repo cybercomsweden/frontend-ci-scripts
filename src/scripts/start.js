@@ -16,7 +16,7 @@ const {
 } = require('../utils/localAppConfigs');
 const webpackConfig = require('../config/webpack.config.dev.js');
 const createDevServerConfig = require('../config/webpackDevServer.config');
-const clearConsole = require('./../utils/clearConsole');
+const clearConsole = require('react-dev-utils/clearConsole');
 
 const isInteractive = process.stdout.isTTY;
 const DEFAULT_PORT = parseInt(process.env.PORT, 10) || 3000;

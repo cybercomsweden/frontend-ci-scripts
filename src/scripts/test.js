@@ -8,6 +8,10 @@ process.env.NODE_ENV = 'test';
 process.on('unhandledRejection', err => {
   throw err;
 });
+
+// Ensure environment variables are read.
+require('../config/env');
+
 const { parseEnv } = require('../utils/utils');
 const clearConsole = require('../utils/clearConsole');
 const jest = require('jest');

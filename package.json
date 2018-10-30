@@ -1,5 +1,5 @@
 {
-  "name": "@cybercomsweden/frontend-ci-scripts",
+  "name": "frontend-ci-scripts",
   "version": "0.11.0",
   "description": "",
   "engines": {

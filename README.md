@@ -7,10 +7,8 @@
 
 ## Install
 
-While unstable the only way to install is the following
-
 ```
-npm install --save-dev cybercomsweden/frontend-ci-scripts
+npm install --save-dev @cybercomsweden/frontend-ci-scripts
 ```
 
 ## Usage
@@ -107,3 +105,6 @@ It expects a path to a directory (should be relative to the project root).
 ### Public Path
 
 If an environment variable `PUBLIC_PATH` is set, the webpack build will use that. Otherwise it defaults to '/'.
+
+## Inspiration
+create-react-app and kcd-scripts

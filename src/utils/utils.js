@@ -11,7 +11,7 @@ const appDirectory = path.dirname(pkgPath);
 const resolveApp = relativePath => path.resolve(appDirectory, relativePath);
 
 function resolvePackagePath() {
-  if (pkg.name === 'frontend-ci-scripts') {
+  if (pkg.name === '@cybercomsweden/frontend-ci-scripts') {
     return require.resolve('../').replace(process.cwd(), '.');
   }
   return resolveBin('frontend-ci-scripts');

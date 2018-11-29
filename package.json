@@ -13,8 +13,7 @@
   "scripts": {
     "test": "node src test",
     "lint": "node src lint",
-    "format": "node src format",
-    "precommit": "node src precommit"
+    "format": "node src format"
   },
   "keywords": [],
   "author": "",

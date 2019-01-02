@@ -1,5 +1,7 @@
 'use strict';
 
+const path = require('path');
+
 const errorOverlayMiddleware = require('react-dev-utils/errorOverlayMiddleware');
 const evalSourceMapMiddleware = require('react-dev-utils/evalSourceMapMiddleware');
 const noopServiceWorkerMiddleware = require('react-dev-utils/noopServiceWorkerMiddleware');
@@ -9,6 +11,12 @@ const fs = require('fs');
 
 const protocol = process.env.HTTPS === 'true' ? 'https' : 'http';
 const host = process.env.HOST || '0.0.0.0';
+
+const contentBase = [paths.appPublic];
+
+if (paths.appPackageJson.mocks) {
+  contentBase.push(path.resolve(paths.appPackageJson.mocks));
+}
 
 module.exports = function(proxy, allowedHost) {
   return {

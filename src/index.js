@@ -24,13 +24,13 @@ const scriptIndex = args.findIndex(
     x === 'test' ||
     x === 'precommit' ||
     x === 'build' ||
-    x === 'start',
+    x === 'start'
 );
 const script = scriptIndex === -1 ? args[0] : args[scriptIndex];
 const nodeArgs = scriptIndex > 0 ? args.slice(0, scriptIndex) : [];
 
 switch (script) {
-  case 'precommit':
+  case 'pre-commit':
   case 'lint':
   case 'format':
   case 'test':
@@ -38,30 +38,17 @@ switch (script) {
   case 'build': {
     const packageJson = require('../package.json');
     console.log(
-      chalk.cyan(`Cybercom ${packageJson.name} ${packageJson.version}`),
+      chalk.cyan(`Cybercom ${packageJson.name} ${packageJson.version}`)
     );
     const result = spawn.sync(
       'node',
       nodeArgs
         .concat(require.resolve('./scripts/' + script))
         .concat(args.slice(scriptIndex + 1)),
-      { stdio: 'inherit', env: getEnv() },
+      { stdio: 'inherit', env: getEnv() }
     );
     if (result.signal) {
-      if (result.signal === 'SIGKILL') {
-        console.log(
-          'The build failed because the process exited too early. ' +
-            'This probably means the system ran out of memory or someone called ' +
-            '`kill -9` on the process.',
-        );
-      } else if (result.signal === 'SIGTERM') {
-        console.log(
-          'The build failed because the process exited too early. ' +
-            'Someone might have called `kill` or `killall`, or the system could ' +
-            'be shutting down.',
-        );
-      }
-      process.exit(1);
+      handleSignal(result);
     }
     process.exit(result.status);
     break;
@@ -84,6 +71,23 @@ function getEnv() {
       },
       {
         [`SCRIPTS_${script.toUpperCase()}`]: true,
-      },
+      }
     );
+}
+
+function handleSignal(result) {
+  if (result.signal === 'SIGKILL') {
+    console.log(
+      `The script "${script}" failed because the process exited too early. ` +
+        'This probably means the system ran out of memory or someone called ' +
+        '`kill -9` on the process.'
+    );
+  } else if (result.signal === 'SIGTERM') {
+    console.log(
+      `The script "${script}" failed because the process exited too early. ` +
+        'Someone might have called `kill` or `killall`, or the system could ' +
+        'be shutting down.'
+    );
+  }
+  process.exit(1);
 }

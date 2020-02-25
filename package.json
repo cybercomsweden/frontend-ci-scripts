@@ -1,6 +1,6 @@
 {
   "name": "@cybercomsweden/frontend-ci-scripts",
-  "version": "0.15.0",
+  "version": "1.0.0",
   "description": "",
   "engines": {
     "node": ">= 8.10",

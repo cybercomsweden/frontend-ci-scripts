@@ -51,8 +51,13 @@ if (!checkRequiredFiles([paths.appHtml, paths.appIndexJs])) {
   process.exit(1);
 }
 
+const argv = process.argv.slice(2);
+const configOptions = {
+  disableMinification: argv.indexOf('--nomini') !== -1,
+};
+
 // Generate configuration
-const config = configFactory('production');
+const config = configFactory('production', configOptions);
 
 // We require that you explicitly set browsers and do not fall back to
 // browserslist defaults.
@@ -128,7 +133,11 @@ checkBrowsers(paths.appPath, isInteractive)
 
 // Create the production build and print the deployment instructions.
 function build(previousFileSizes) {
-  console.log('Creating an optimized production build...');
+  if (configOptions.disableMinification) {
+    console.log('Creating an unoptimized production build...');
+  } else {
+    console.log('Creating an optimized production build...');
+  }
 
   const compiler = webpack(config);
   return new Promise((resolve, reject) => {

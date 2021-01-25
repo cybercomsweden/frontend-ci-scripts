@@ -8,17 +8,12 @@ process.env.PUBLIC_URL = '';
 // Makes the script crash on unhandled rejections instead of silently
 // ignoring them. In the future, promise rejections that are not handled will
 // terminate the Node.js process with a non-zero exit code.
-process.on('unhandledRejection', err => {
+process.on('unhandledRejection', (err) => {
   throw err;
 });
 
 // Ensure environment variables are read.
 require('../config/env');
-
-const verifyPackageTree = require('./utils/verifyPackageTree');
-if (process.env.SKIP_PREFLIGHT_CHECK !== 'true') {
-  verifyPackageTree();
-}
 
 const jest = require('jest');
 const execSync = require('child_process').execSync;
@@ -63,7 +58,7 @@ argv.push(
   '--config',
   JSON.stringify(
     createJestConfig(
-      relativePath => path.resolve(__dirname, '..', relativePath),
+      (relativePath) => path.resolve(__dirname, '..', relativePath),
       path.resolve(paths.appSrc, '..'),
       false
     )

@@ -9,7 +9,7 @@
 // Makes the script crash on unhandled rejections instead of silently
 // ignoring them. In the future, promise rejections that are not handled will
 // terminate the Node.js process with a non-zero exit code.
-process.on('unhandledRejection', err => {
+process.on('unhandledRejection', (err) => {
   throw err;
 });
 
@@ -18,7 +18,7 @@ const spawn = require('cross-spawn');
 const args = process.argv.slice(2);
 
 const scriptIndex = args.findIndex(
-  x =>
+  (x) =>
     x === 'lint' ||
     x === 'format' ||
     x === 'test' ||
@@ -63,7 +63,7 @@ function getEnv() {
   // this is required to address an issue in cross-spawn
   // https://github.com/kentcdodds/kcd-scripts/issues/4
   return Object.keys(process.env)
-    .filter(key => process.env[key] !== undefined)
+    .filter((key) => process.env[key] !== undefined)
     .reduce(
       (envCopy, key) => {
         envCopy[key] = process.env[key];

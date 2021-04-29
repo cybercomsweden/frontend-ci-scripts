@@ -19,7 +19,7 @@ if (appPackageJson.mocks) {
   contentBase.push(path.resolve(appPackageJson.mocks));
 }
 
-module.exports = function(proxy, allowedHost) {
+module.exports = function (proxy, allowedHost) {
   return {
     // WebpackDevServer 2.4.3 introduced a security fix that prevents remote
     // websites from potentially accessing local content through DNS rebinding:

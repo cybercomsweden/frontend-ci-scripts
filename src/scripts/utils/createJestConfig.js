@@ -48,7 +48,7 @@ module.exports = (resolve, rootDir, isEjecting) => {
       '^.+\\.module\\.(css|sass|scss)$': 'identity-obj-proxy',
     },
     moduleFileExtensions: [...paths.moduleFileExtensions, 'node'].filter(
-      ext => !ext.includes('mjs')
+      (ext) => !ext.includes('mjs')
     ),
     watchPlugins: [
       require.resolve('jest-watch-typeahead/filename'),
@@ -72,7 +72,7 @@ module.exports = (resolve, rootDir, isEjecting) => {
     'watchPathIgnorePatterns',
   ];
   if (overrides) {
-    supportedKeys.forEach(key => {
+    supportedKeys.forEach((key) => {
       if (overrides.hasOwnProperty(key)) {
         config[key] = overrides[key];
         delete overrides[key];
@@ -100,13 +100,13 @@ module.exports = (resolve, rootDir, isEjecting) => {
             '\nOut of the box, Create React App only supports overriding ' +
               'these Jest options:\n\n' +
               supportedKeys
-                .map(key => chalk.bold('  \u2022 ' + key))
+                .map((key) => chalk.bold('  \u2022 ' + key))
                 .join('\n') +
               '.\n\n' +
               'These options in your package.json Jest configuration ' +
               'are not currently supported by Create React App:\n\n' +
               unsupportedKeys
-                .map(key => chalk.bold('  \u2022 ' + key))
+                .map((key) => chalk.bold('  \u2022 ' + key))
                 .join('\n') +
               '\n\nIf you wish to override other Jest options, you need to ' +
               'eject from the default setup. You can do so by running ' +

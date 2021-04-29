@@ -2,8 +2,8 @@ const path = require('path');
 const CLIEngine = require('eslint').CLIEngine;
 const { hasFile } = require('../utils/utils');
 
-const here = p => path.join(__dirname, p);
-const hereRelative = p => here(p).replace(process.cwd(), '.');
+const here = (p) => path.join(__dirname, p);
+const hereRelative = (p) => here(p).replace(process.cwd(), '.');
 const useBuiltinConfig = !hasFile('.eslintrc') && !hasFile('.eslintrc.js');
 
 const config = useBuiltinConfig

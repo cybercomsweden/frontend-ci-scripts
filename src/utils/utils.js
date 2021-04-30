@@ -8,7 +8,7 @@ const { pkg, path: pkgPath } = readPkgUp.sync({
 });
 
 const appDirectory = path.dirname(pkgPath);
-const resolveApp = relativePath => path.resolve(appDirectory, relativePath);
+const resolveApp = (relativePath) => path.resolve(appDirectory, relativePath);
 
 function resolvePackagePath() {
   if (pkg.name === '@cybercomsweden/frontend-ci-scripts') {

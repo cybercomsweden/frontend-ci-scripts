@@ -11,9 +11,9 @@
     "frontend-ci-scripts": "src/index.js"
   },
   "scripts": {
-    "test": "node src test",
-    "lint": "node src lint",
-    "format": "node src format"
+    "test": "node src test ",
+    "lint": "node src lint ",
+    "format": "node src format "
   },
   "keywords": [],
   "author": "",
